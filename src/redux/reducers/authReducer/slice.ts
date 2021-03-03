@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import initialState from './initialstate'
+import constants from '../constants'
 
 export const authenticationSlice = createSlice({
-    name: 'authDetail',
+    name: constants.AUTH_SLICE_NAME,
     initialState: initialState,
     reducers: {
         setAuthToken: (state:any, action) => {

@@ -8,6 +8,7 @@ import LoginService from '../../services/login'
 import { loginPageStyles } from './styles'
 import { LoginForm } from '../../components/Login';
 import { extractJwt } from '../../configs/common/types'
+import routes from '../../configs/constants/routes'
 
 const Login = (props:any) => {
 
@@ -19,7 +20,7 @@ const Login = (props:any) => {
 
   React.useEffect(()=>{
     if(props.history && isAuthenticated === true){
-      props.history.push('/tickets')
+      props.history.push(routes.TICKETS)
     }
   },[isAuthenticated])
 

@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 import { BaseReducer } from './types'
 import initialState from './initialstate'
+import constants from '../constants'
 
 export const tasksSlice = createSlice({
-    name: 'tasks',
+    name: constants.TASKS_SLICE_NAME,
     initialState: initialState,
     reducers: {
         taskUpdated: (state: BaseReducer, action) => {
