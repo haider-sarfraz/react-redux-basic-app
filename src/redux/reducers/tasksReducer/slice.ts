@@ -15,11 +15,15 @@ export const tasksSlice = createSlice({
                 }
                 return task;
             })
+        },
+        addNewTask: (state: BaseReducer, action:any) => {
+            console.log(action.payload.taskDetail)
+            state.taskList = [...state.taskList, action.payload.taskDetail]
         }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { taskUpdated } = tasksSlice.actions
+export const { taskUpdated,addNewTask } = tasksSlice.actions
 
 export const tasksReducer = tasksSlice.reducer
