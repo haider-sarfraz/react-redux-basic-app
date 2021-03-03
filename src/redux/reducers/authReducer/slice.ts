@@ -1,23 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
-import isEmpty from 'lodash';
-
-import { Authentication } from './types'
 import initialState from './initialstate'
 
 export const authenticationSlice = createSlice({
-    name: 'authentication',
+    name: 'authDetail',
     initialState: initialState,
     reducers: {
+        setAuthToken: (state:any, action) => {
+            state.isAuthenticated = (action.payload.user) ? true : false;
+            state.jwtToken = action.payload.jwtToken;
+        },
         setCurrentUser: (state: any, action) => {
-            return {
-                isAuthenticated: !isEmpty(action.payload.user),
-                user: action.payload.user
-            }
-        }
+            state.user = action.payload.user;
+        },
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { setCurrentUser } = authenticationSlice.actions
+export const { setAuthToken, setCurrentUser } = authenticationSlice.actions
 
 export const authReducer = authenticationSlice.reducer

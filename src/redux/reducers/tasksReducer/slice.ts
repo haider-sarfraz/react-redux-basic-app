@@ -13,7 +13,6 @@ export const tasksSlice = createSlice({
                 }
                 return task;
             })
-
         }
     }
 })

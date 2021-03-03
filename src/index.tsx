@@ -6,7 +6,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
-import setAuthToken from './services/setAuthToken';
+import setAuthToken from './services/common/setAuthToken';
 
 if(localStorage.jwtToken){
   setAuthToken(localStorage.jwtToken)
