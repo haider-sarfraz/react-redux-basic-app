@@ -6,10 +6,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
+import setAuthToken from './services/setAuthToken';
+
+if(localStorage.jwtToken){
+  setAuthToken(localStorage.jwtToken)
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider store={store as any}>
       <App />
     </Provider>
   </React.StrictMode>,

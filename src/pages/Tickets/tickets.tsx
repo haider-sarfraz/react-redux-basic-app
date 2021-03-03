@@ -1,27 +1,25 @@
 import * as React from 'react';
-import { connect } from 'react-redux'
 import {
     Box,
     Container,
     Grid,
     Typography
 } from '@material-ui/core'
+import { useSelector } from 'react-redux'
 
 import { ticketBoard } from './boards';
 import { TicketsPanelStyles } from './styles';
-import statusUpdated from '../../redux/actions/actions'
 import { Ticket } from '../../components/Ticket';
+import { taskUpdated } from '../../redux/reducers/tasksReducer/slice'
 
 const TicketsPanel:React.FC<any> = (props):any => {
-
     const classes = TicketsPanelStyles();
-    const tasks:any[] = props.taskList;
 
-    ticketBoard[0].taskList = tasks.filter((tasks:any)=> tasks.state === 'to-do');
-    ticketBoard[1].taskList = tasks.filter((tasks:any)=> tasks.state === 'in-progress');
-    ticketBoard[2].taskList = tasks.filter((tasks:any)=> tasks.state === 'complete');
-
-    console.log(ticketBoard);
+    const taskList = useSelector((state:any) => state.tasks.taskList)
+    
+    ticketBoard[0].taskList = taskList.filter((task:any)=> task.state === 'to-do');
+    ticketBoard[1].taskList = taskList.filter((task:any)=> task.state === 'in-progress');
+    ticketBoard[2].taskList = taskList.filter((task:any)=> task.state === 'complete');
 
     return (
         <Container component="main" maxWidth="xl">
@@ -45,7 +43,7 @@ const TicketsPanel:React.FC<any> = (props):any => {
                                         classes={classes}
                                         title={title}
                                         taskList={taskList}
-                                        statusUpdated={props.statusUpdated}
+                                        statusUpdated={taskUpdated}
                                     />
                                 </Grid>
                             )
@@ -75,13 +73,4 @@ function getGridClass(title:string, classes:any){
     return gridClass;
 }
 
-const mapStateToProps = (state:any) => {
-    return {
-      taskList: state,
-    }
-}
-const mapDispatchToProps = {
-    statusUpdated: statusUpdated
-}
-
-export const TicketsComponent = connect(mapStateToProps, mapDispatchToProps)(TicketsPanel);
+export const TicketsComponent = TicketsPanel;

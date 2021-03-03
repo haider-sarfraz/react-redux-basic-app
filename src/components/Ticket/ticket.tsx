@@ -4,12 +4,13 @@ import {
     Button,
     Typography,
 } from '@material-ui/core'
-
+import { useDispatch } from 'react-redux'
 export const TicketsComponent:React.FC<any> = (props):any => {
     const { classes } = props;
     const { title, taskList } = props;
     const { statusUpdated } = props;
-
+    const dispatch = useDispatch()
+    
     return  <Grid container className={classes.taskListContainer}>
                 <Typography component="h3" variant="h5"  align="center" className={title === 'Complete' ? classes.completedBoardHeading : ''}>
                     {title}
@@ -20,13 +21,13 @@ export const TicketsComponent:React.FC<any> = (props):any => {
                         return (
                             <Grid container key={index} className={classes.taskBox}>
                                 <p>{task.title}</p>
-                                <Button variant="contained" color="primary" onClick={()=>statusUpdated(task.title,'to-do')}>
+                                <Button variant="contained" color="primary" onClick={()=>dispatch(statusUpdated({title:task.title,state:'to-do'}))}>
                                     Todo
                                 </Button>
-                                <Button variant="contained" color="primary" onClick={()=>statusUpdated(task.title,'in-progress')}>
+                                <Button variant="contained" color="primary" onClick={()=>dispatch(statusUpdated({title:task.title,state:'in-progress'}))}>
                                     InProgress
                                 </Button>
-                                <Button variant="contained" color="primary" onClick={()=>statusUpdated(task.title,'complete')}>
+                                <Button variant="contained" color="primary" onClick={()=>dispatch(statusUpdated({title:task.title,state:'complete'}))}>
                                     Completed
                                 </Button>
                             </Grid>
