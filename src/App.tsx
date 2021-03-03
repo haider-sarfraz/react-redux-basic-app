@@ -3,13 +3,17 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import routes from './configs/constants/routes'
+import { useSelector } from 'react-redux'
 
+import routes from './configs/constants/routes'
 import { LandingPage } from './pages/LandingPage'
-import { Login } from './pages/Login'
 import { Tickets } from './pages/Tickets'
+import { Login } from './pages/Login'
 
 function App() {
+  
+  const { isAuthenticated } = useSelector((state:any) => state.auth)
+
   return (
     <Router>
       <Switch>
@@ -20,7 +24,11 @@ function App() {
           <Login />
         </Route>
         <Route exact path={routes.TICKETS}>
-          <Tickets />
+          {
+            (isAuthenticated)
+            ? <Tickets />
+            : <Login />
+          }
         </Route>
       </Switch>
     </Router>
