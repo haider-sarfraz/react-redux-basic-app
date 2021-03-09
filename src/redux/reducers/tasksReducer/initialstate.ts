@@ -1,23 +1,22 @@
+import { boardStates  } from '../../../configs/constants/boardStates'
 
 export default {
     taskList: [
         {
             title: 'Do something',
-            state: 'to-do'
+            state: boardStates.TO_DO
         },
         {
             title: 'Do something 1',
-            state: 'to-do'
+            state: boardStates.TO_DO
         },
         {
             title: 'Do something 2',
-            state: 'in-progress'
+            state: boardStates.IN_PROGRESS
         },
         {
             title: 'Do something 3',
-            state: 'complete'
+            state: boardStates.COMPLETE
         }
     ],
-    // isLoggedIn: false,
-    // jwtToken: ''
 }

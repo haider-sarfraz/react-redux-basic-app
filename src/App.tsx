@@ -28,6 +28,7 @@ function App() {
             (isAuthenticated)
             ? <Tickets />
             : <Login />
+            //Don't pass comp, use redirect=====or===== create a component <AuthAndRedirect /> that has all private paths
           }
         </Route>
       </Switch>

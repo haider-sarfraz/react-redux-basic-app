@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { ticketBoard } from './boards';
+import { taskStates } from './boards';
 import { TicketsPanelStyles } from './styles';
 import { Ticket } from '../../components/Ticket';
 import { addNewTask, taskUpdated } from '../../redux/reducers/tasksReducer/slice'
@@ -20,10 +20,6 @@ const TicketsPanel:React.FC<any> = (props):any => {
 
     const taskList = useSelector((state:any) => state.tasks.taskList)
     
-    ticketBoard[0].taskList = taskList.filter((task:any)=> task.state === 'to-do');
-    ticketBoard[1].taskList = taskList.filter((task:any)=> task.state === 'in-progress');
-    ticketBoard[2].taskList = taskList.filter((task:any)=> task.state === 'complete');
-
     const [open, setOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState('');
     const handleNewTicketClick = () => {
@@ -49,7 +45,6 @@ const TicketsPanel:React.FC<any> = (props):any => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        // className={classes.submit}
                         onClick={() => handleNewTicketClick()}
                     >
                         Add Ticket
@@ -60,29 +55,31 @@ const TicketsPanel:React.FC<any> = (props):any => {
             <Box mt={8}>
                 <Grid container spacing={3}>
                     {
-                        ticketBoard.map((board:any,index:any)=>{
-                            const { title, taskList } = board;
-                            const gridClass = getGridClass(title,classes);
-
+                        taskStates.map((taskState:string,index:any)=>{
+                            const gridClass = getGridClass(taskState,classes);
+                            const boardTitle = taskState.replace('-',' ');
                             return (
 
                                 <Grid item xs={4} className={`${classes.sprintBoard} ${gridClass}`} key={index}>
                                     <Grid container className={classes.taskListContainer}>
-                                        <Typography component="h3" variant="h5"  align="center" className={title === 'Complete' ? classes.completedBoardHeading : ''}>
-                                            {title}
+                                        <Typography component="h3" variant="h5"  align="center" className={taskState === 'Complete' ? classes.completedBoardHeading : ''}>
+                                            {boardTitle}
                                         </Typography>
                                         <Grid container className={classes.taskList} spacing={3}>
                                         {
-                                            taskList.map((task:any,index:any)=>{
-                                                return (
-                                                    <Ticket
-                                                        classes={classes}
-                                                        task={task}
-                                                        index={index}
-                                                        statusUpdated={taskUpdated}
-                                                    />
-                                                )
-                                            })
+                                            taskList.reduce(function(filtered:any[], task:any) {
+                                                if (task.state === taskState) {
+                                                    filtered.push((
+                                                        <Ticket
+                                                            classes={classes}
+                                                            task={task}
+                                                            index={index}
+                                                            statusUpdated={taskUpdated}
+                                                        />
+                                                    ));
+                                                }
+                                                return filtered;
+                                              }, [])
                                         }
                                         </Grid>
                                     </Grid>
@@ -98,18 +95,14 @@ const TicketsPanel:React.FC<any> = (props):any => {
 
 function getGridClass(title:string, classes:any){
     let gridClass:string = '';
-    switch(title){
-        case 'TO DO':
-            gridClass = classes.toDoContainer;
-            break;
-        case 'In Progress':
-            gridClass = classes.inProgressContainer;
-            break;
-        case 'Complete':
-            gridClass = classes.completedContainer;
-            break;
-        default:
-            break;
+
+    for(let i=0; i < taskStates.length; i++){
+        if(title === taskStates[i]){
+            let className = taskStates[i].replace('-','');
+            className = className + 'Container';
+            console.log(`className = `,className)
+            gridClass = classes[className]
+        }
     }
     return gridClass;
 }

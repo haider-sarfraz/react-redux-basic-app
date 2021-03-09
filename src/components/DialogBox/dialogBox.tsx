@@ -13,6 +13,8 @@ import {
     TextField
 } from '@material-ui/core';
 
+import { boardStates } from '../../configs/constants/boardStates'
+
 const BootstrapInput = withStyles((theme) => ({
     root: {
         'label + &': {
@@ -108,9 +110,9 @@ export const DialogBox: React.FC<any> = (props) => {
                         onChange={handleTicketState}
                         input={<BootstrapInput />}
                     >
-                    <MenuItem value={'to-do'}>TO_DO</MenuItem>
-                    <MenuItem value={'in-progress'}>IN_PROGRESS</MenuItem>
-                    <MenuItem value={'complete'}>COMPLETE</MenuItem>
+                    <MenuItem value={boardStates.TO_DO}>TO_DO</MenuItem>
+                    <MenuItem value={boardStates.IN_PROGRESS}>IN_PROGRESS</MenuItem>
+                    <MenuItem value={boardStates.COMPLETE}>COMPLETE</MenuItem>
                     </Select>
                 </FormControl>
                 <Button

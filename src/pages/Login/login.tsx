@@ -1,13 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux'
 
-import { setCurrentUser, setAuthToken } from '../../redux/reducers/authReducer/slice'
-import updatedAxiosAuthHeader from '../../services/common/setAuthToken'
-import LoginService from '../../services/login'
+import { useSelector, useDispatch } from 'react-redux'
+import { authenticateUser } from '../../redux/reducers/authReducer/slice'
 import { loginPageStyles } from './styles'
 import { LoginForm } from '../../components/Login';
-import { extractJwt } from '../../configs/common/types'
 import routes from '../../configs/constants/routes'
 
 const Login = (props:any) => {
@@ -25,16 +21,7 @@ const Login = (props:any) => {
   },[isAuthenticated])
 
   const handleLoginSubmission = (userName:string,password:string):any => {
-    axios.post('http://localhost:9000/api/login',{userName,password})
-      .then(res=> {
-          const [ token, user ]:extractJwt = LoginService.extractJwt(res.data.token);
-          
-          localStorage.setItem('jwtToken',token);
-
-          updatedAxiosAuthHeader(token);
-          dispatch(setCurrentUser({ user }));
-          dispatch(setAuthToken({ user: user, jwtToken: token }));
-      })
+    dispatch(authenticateUser({userName,password}))
   }
   
   return (

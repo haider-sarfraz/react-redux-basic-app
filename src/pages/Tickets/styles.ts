@@ -15,7 +15,7 @@ export const TicketsPanelStyles = makeStyles((theme) => ({
   inProgressContainer: {
     backgroundColor: 'darkcyan',
   },
-  completedContainer: {
+  completeContainer: {
     backgroundColor: 'midnightblue'
   },
   completedBoardHeading: {
